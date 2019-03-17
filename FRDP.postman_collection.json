@@ -458,7 +458,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n       \"input_token_state\": {\n          \"token_type\": \"OPENAM\",\n          \"session_id\": \"{{tokenId}}\"\n       },\n       \"output_token_state\": {\n          \"token_type\": \"SAML2\",\n          \"subject_confirmation\": \"BEARER\"\n       }\n    }"
+							"raw": " {\n       \"input_token_state\": {\n          \"token_type\": \"OPENAM\",\n          \"session_id\": \"{{ssoTokenId}}\"\n       },\n       \"output_token_state\": {\n          \"token_type\": \"SAML2\",\n          \"subject_confirmation\": \"BEARER\"\n       }\n    }"
 						},
 						"url": {
 							"raw": "{{proto}}://{{Hostname}}/openam/rest-sts/frdprststs?_action=translate",
@@ -505,7 +505,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n       \"input_token_state\": {\n          \"token_type\": \"OPENAM\",\n          \"session_id\": \"{{tokenId}}\"\n       },\n       \"output_token_state\": {\n          \"token_type\": \"OPENIDCONNECT\",\n          \"nonce\": \"12345678\", \"allow_access\": true\n       }\n    }"
+							"raw": " {\n       \"input_token_state\": {\n          \"token_type\": \"OPENAM\",\n          \"session_id\": \"{{ssoTokenId}}\"\n       },\n       \"output_token_state\": {\n          \"token_type\": \"OPENIDCONNECT\",\n          \"nonce\": \"12345678\", \"allow_access\": true\n       }\n    }"
 						},
 						"url": {
 							"raw": "{{proto}}://{{Hostname}}/openam/rest-sts/frdprststs?_action=translate",
