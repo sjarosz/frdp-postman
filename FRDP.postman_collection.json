@@ -748,7 +748,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{Hostname}}/openidm/workflow/processinstance?_queryId=query-all-ids",
+							"raw": "{{proto}}://{{Hostname}}/openidm/workflow/processinstance?_queryId=query-all-ids",
+							"protocol": "{{proto}}",
 							"host": [
 								"{{Hostname}}"
 							],
@@ -976,12 +977,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://jrsz.frdpcloud.com/contacts/users/bjensen?_prettyPrint=true",
-							"protocol": "https",
+							"raw": "{{proto}}://{{Hostname}}/contacts/users/bjensen?_prettyPrint=true",
+							"protocol": "{{proto}}",
 							"host": [
-								"jrsz",
-								"frdpcloud",
-								"com"
+								"{{Hostname}}"
 							],
 							"path": [
 								"contacts",
@@ -1019,12 +1018,10 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://jrsz.frdpcloud.com/contacts/users?_queryFilter=name/familyname+eq+%22Jensen%22&_prettyPrint=true&_fields=userName,name,employeeType,groups",
-							"protocol": "https",
+							"raw": "{{proto}}://{{Hostname}}/contacts/users?_queryFilter=name/familyname+eq+%22Jensen%22&_prettyPrint=true&_fields=userName,name,employeeType,groups",
+							"protocol": "{{proto}}",
 							"host": [
-								"jrsz",
-								"frdpcloud",
-								"com"
+								"{{Hostname}}"
 							],
 							"path": [
 								"contacts",
@@ -1063,20 +1060,17 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://jrsz.frdpcloud.com/apps/frdp/rest/portal/menus/",
-							"protocol": "https",
+							"raw": "{{proto}}://{{Hostname}}/apps/frdp/rest/portal/menus",
+							"protocol": "{{proto}}",
 							"host": [
-								"jrsz",
-								"frdpcloud",
-								"com"
+								"{{Hostname}}"
 							],
 							"path": [
 								"apps",
 								"frdp",
 								"rest",
 								"portal",
-								"menus",
-								""
+								"menus"
 							]
 						}
 					},
