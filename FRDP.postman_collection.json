@@ -7,322 +7,671 @@
 	},
 	"item": [
 		{
-			"name": "Authentication",
+			"name": "AM",
 			"item": [
 				{
-					"name": "authenticate",
+					"name": "STSFunctions",
+					"item": [
+						{
+							"name": "STS-translate-USERNAME-SAML",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n       \"input_token_state\": {\n          \"token_type\": \"USERNAME\",\n          \"username\": \"{{openamUser}}\",\n          \"password\": \"{{openamPassword}}\"\n       },\n       \"output_token_state\": {\n          \"token_type\": \"SAML2\",\n          \"subject_confirmation\": \"BEARER\"\n       }\n    }"
+								},
+								"url": {
+									"raw": "{{proto}}://{{Hostname}}/openam/rest-sts/frdprststs?_action=translate",
+									"protocol": "{{proto}}",
+									"host": [
+										"{{Hostname}}"
+									],
+									"path": [
+										"openam",
+										"rest-sts",
+										"frdprststs"
+									],
+									"query": [
+										{
+											"key": "_action",
+											"value": "translate"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "STS-translate-USERNAME-OIDC",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a36e3455-e2b0-432c-aa9b-24401761c4a5",
+										"exec": [
+											"postman.setGlobalVariable(\"myJWT\", JSON.parse(responseBody).issued_token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n       \"input_token_state\": {\n          \"token_type\": \"USERNAME\",\n          \"username\": \"{{openamUser}}\",\n          \"password\": \"{{openamPassword}}\"\n       },\n       \"output_token_state\": {\n          \"token_type\": \"OPENIDCONNECT\",\n          \"nonce\": \"12345678\", \"allow_access\": true\n       }\n    }"
+								},
+								"url": {
+									"raw": "{{proto}}://{{Hostname}}/openam/rest-sts/frdprststs?_action=translate",
+									"protocol": "{{proto}}",
+									"host": [
+										"{{Hostname}}"
+									],
+									"path": [
+										"openam",
+										"rest-sts",
+										"frdprststs"
+									],
+									"query": [
+										{
+											"key": "_action",
+											"value": "translate"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "STS-translate-X509",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n       \"input_token_state\": {\n          \"token_type\": \"X509\"\n       },\n       \"output_token_state\": {\n          \"token_type\": \"SAML2\",\n          \"subject_confirmation\": \"BEARER\"\n       }\n    }"
+								},
+								"url": {
+									"raw": "{{proto}}://{{Hostname}}/pki/rest-sts/frdprststs?_action=translate",
+									"protocol": "{{proto}}",
+									"host": [
+										"{{Hostname}}"
+									],
+									"path": [
+										"pki",
+										"rest-sts",
+										"frdprststs"
+									],
+									"query": [
+										{
+											"key": "_action",
+											"value": "translate"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "STS-translate-X509 OIDC",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n       \"input_token_state\": {\n          \"token_type\": \"X509\"\n       },\n       \"output_token_state\": {\n          \"token_type\": \"OPENIDCONNECT\",\n          \"nonce\": \"12345678\", \"allow_access\": true\n       }\n    }"
+								},
+								"url": {
+									"raw": "{{proto}}://{{Hostname}}/pki/rest-sts/frdprststs?_action=translate",
+									"protocol": "{{proto}}",
+									"host": [
+										"{{Hostname}}"
+									],
+									"path": [
+										"pki",
+										"rest-sts",
+										"frdprststs"
+									],
+									"query": [
+										{
+											"key": "_action",
+											"value": "translate"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "STS-translate-OPENAM-SAML",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n       \"input_token_state\": {\n          \"token_type\": \"OPENAM\",\n          \"session_id\": \"{{ssoTokenId}}\"\n       },\n       \"output_token_state\": {\n          \"token_type\": \"SAML2\",\n          \"subject_confirmation\": \"BEARER\"\n       }\n    }"
+								},
+								"url": {
+									"raw": "{{proto}}://{{Hostname}}/openam/rest-sts/frdprststs?_action=translate",
+									"protocol": "{{proto}}",
+									"host": [
+										"{{Hostname}}"
+									],
+									"path": [
+										"openam",
+										"rest-sts",
+										"frdprststs"
+									],
+									"query": [
+										{
+											"key": "_action",
+											"value": "translate"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "STS-translate-OPENAM-OIDC",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d7f8db99-25bf-4977-98e3-7babdfcd2c13",
+										"exec": [
+											"postman.setGlobalVariable(\"myJWT\", JSON.parse(responseBody).issued_token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n       \"input_token_state\": {\n          \"token_type\": \"OPENAM\",\n          \"session_id\": \"{{ssoTokenId}}\"\n       },\n       \"output_token_state\": {\n          \"token_type\": \"OPENIDCONNECT\",\n          \"nonce\": \"12345678\", \"allow_access\": true\n       }\n    }"
+								},
+								"url": {
+									"raw": "{{proto}}://{{Hostname}}/openam/rest-sts/frdprststs?_action=translate",
+									"protocol": "{{proto}}",
+									"host": [
+										"{{Hostname}}"
+									],
+									"path": [
+										"openam",
+										"rest-sts",
+										"frdprststs"
+									],
+									"query": [
+										{
+											"key": "_action",
+											"value": "translate"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "STS-translate-OpenIDConnect",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n       \"input_token_state\": {\n          \"token_type\": \"OPENIDCONNECT\",\n          \"oidc_id_token\": \"{{myJWT}}\",\n            \"nonce\": \"12345678\", \n            \"allow_access\": true\n           \n       },\n       \"output_token_state\": {\n          \"token_type\": \"SAML2\",\n          \"subject_confirmation\": \"BEARER\"\n       }\n    }"
+								},
+								"url": {
+									"raw": "{{proto}}://{{Hostname}}/openam/rest-sts/frdprststs?_action=translate",
+									"protocol": "{{proto}}",
+									"host": [
+										"{{Hostname}}"
+									],
+									"path": [
+										"openam",
+										"rest-sts",
+										"frdprststs"
+									],
+									"query": [
+										{
+											"key": "_action",
+											"value": "translate"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Authentication Callbacks",
+					"item": [
+						{
+							"name": "GetServerOptions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b6f4cfbc-961d-46f5-b040-a124c8fff183",
+										"exec": [
+											"postman.setGlobalVariable(\"authId\", JSON.parse(responseBody).authId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-Requested-With",
+										"type": "text",
+										"value": "XMLHttpRequest"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json, text/javascript, */*; q=0.01",
+										"type": "text"
+									},
+									{
+										"key": "Accept-API-Version",
+										"value": "protocol=1.0,resource=1.1",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"url": {
+									"raw": "{{proto}}://{{Hostname}}//openam/json/serverinfo/*",
+									"protocol": "{{proto}}",
+									"host": [
+										"{{Hostname}}"
+									],
+									"path": [
+										"",
+										"openam",
+										"json",
+										"serverinfo",
+										"*"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Initiate",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b6f4cfbc-961d-46f5-b040-a124c8fff183",
+										"exec": [
+											"postman.setGlobalVariable(\"authId\", JSON.parse(responseBody).authId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept-API-Version",
+										"value": "protocol=1.0,resource=2.0",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"url": {
+									"raw": "{{proto}}://{{Hostname}}/openam/json/authenticate?authIndexType=service&authIndexValue=ldapService",
+									"protocol": "{{proto}}",
+									"host": [
+										"{{Hostname}}"
+									],
+									"path": [
+										"openam",
+										"json",
+										"authenticate"
+									],
+									"query": [
+										{
+											"key": "authIndexType",
+											"value": "service"
+										},
+										{
+											"key": "authIndexValue",
+											"value": "ldapService"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Complete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7db0c8e2-9ddf-414e-90bb-d05c77578f57",
+										"exec": [
+											"postman.setGlobalVariable(\"ssoTokenId\", JSON.parse(responseBody).tokenId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept-API-Version",
+										"value": "protocol=1.0,resource=2.0",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"authId\":\"{{authId}}\",\n  \"template\":\"\",\n  \"stage\":\"DataStore1\",\n  \"header\":\"Sign in to OpenAM\",\n  \"callbacks\":[\n    {\n      \"type\":\"NameCallback\",\n      \"output\":[ {\"name\":\"prompt\",\"value\":\"User Name:\"} ],\n      \"input\":[ {\"name\":\"IDToken1\",\"value\":\"{{amAdminUsername}}\"} ]\n    },\n    {\n      \"type\":\"PasswordCallback\",\n      \"output\":[ {\"name\":\"prompt\",\"value\":\"Password:\"} ],\n      \"input\":[ {\"name\":\"IDToken2\",\"value\":\"{{amAdminPassword}}\"} ]\n    }\n  ]\n}"
+								},
+								"url": {
+									"raw": "{{proto}}://{{Hostname}}/openam/json/authenticate",
+									"protocol": "{{proto}}",
+									"host": [
+										"{{Hostname}}"
+									],
+									"path": [
+										"openam",
+										"json",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						}
+					],
 					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "0d5091af-f359-4ace-865b-41560d5f8a3a",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
 						{
 							"listen": "test",
 							"script": {
-								"id": "a14c59de-9336-4319-9ae4-02b753e5171a",
+								"id": "e6f3f8f3-944e-4877-b973-f018c184e095",
+								"type": "text/javascript",
 								"exec": [
-									"postman.setGlobalVariable(\"ssoTokenId\", JSON.parse(responseBody).tokenId);"
-								],
-								"type": "text/javascript"
+									""
+								]
 							}
 						}
 					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "X-OpenAM-Username",
-								"value": "{{openamUser}}"
-							},
-							{
-								"key": "X-OpenAM-Password",
-								"value": "{{openamPassword}}"
-							},
-							{
-								"key": "Accept-API-Version",
-								"value": "protocol=1.0,resource=2.0"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{proto}}://{{Hostname}}/openam/json/realms/root/authenticate",
-							"protocol": "{{proto}}",
-							"host": [
-								"{{Hostname}}"
-							],
-							"path": [
-								"openam",
-								"json",
-								"realms",
-								"root",
-								"authenticate"
-							]
-						}
-					},
-					"response": []
+					"_postman_isSubFolder": true
 				},
 				{
-					"name": "AuthLevel",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{proto}}://{{Hostname}}/openam/identity/json/attributes?subjectid={{tokenId}}&attributenames=AuthLevel",
-							"protocol": "{{proto}}",
-							"host": [
-								"{{Hostname}}"
-							],
-							"path": [
-								"openam",
-								"identity",
-								"json",
-								"attributes"
-							],
-							"query": [
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "authenticate",
+							"event": [
 								{
-									"key": "subjectid",
-									"value": "{{tokenId}}"
-								},
-								{
-									"key": "attributenames",
-									"value": "AuthLevel"
+									"listen": "test",
+									"script": {
+										"id": "a14c59de-9336-4319-9ae4-02b753e5171a",
+										"exec": [
+											"postman.setGlobalVariable(\"ssoTokenId\", JSON.parse(responseBody).tokenId);"
+										],
+										"type": "text/javascript"
+									}
 								}
-							]
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-OpenAM-Username",
+										"value": "{{openamUser}}"
+									},
+									{
+										"key": "X-OpenAM-Password",
+										"value": "{{openamPassword}}"
+									},
+									{
+										"key": "Accept-API-Version",
+										"value": "protocol=1.0,resource=2.0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{proto}}://{{Hostname}}/openam/json/realms/root/authenticate",
+									"protocol": "{{proto}}",
+									"host": [
+										"{{Hostname}}"
+									],
+									"path": [
+										"openam",
+										"json",
+										"realms",
+										"root",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "authenticate AMADMIN",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a14c59de-9336-4319-9ae4-02b753e5171a",
+										"exec": [
+											"postman.setGlobalVariable(\"ssoTokenId\", JSON.parse(responseBody).tokenId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-OpenAM-Username",
+										"value": "amadmin"
+									},
+									{
+										"key": "X-OpenAM-Password",
+										"value": "{{openamPassword}}"
+									},
+									{
+										"key": "Accept-API-Version",
+										"value": "protocol=1.0,resource=2.0"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{proto}}://{{Hostname}}/openam/json/realms/root/authenticate",
+									"protocol": "{{proto}}",
+									"host": [
+										"{{Hostname}}"
+									],
+									"path": [
+										"openam",
+										"json",
+										"realms",
+										"root",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AuthLevel",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{proto}}://{{Hostname}}/openam/identity/json/attributes?subjectid={{ssoTokenId}}&attributenames=AuthLevel",
+									"protocol": "{{proto}}",
+									"host": [
+										"{{Hostname}}"
+									],
+									"path": [
+										"openam",
+										"identity",
+										"json",
+										"attributes"
+									],
+									"query": [
+										{
+											"key": "subjectid",
+											"value": "{{ssoTokenId}}"
+										},
+										{
+											"key": "attributenames",
+											"value": "AuthLevel"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					],
+					"_postman_isSubFolder": true
 				}
 			]
 		},
 		{
-			"name": "Authentication Callbacks",
+			"name": "IDM",
 			"item": [
 				{
-					"name": "GetSocialOptions",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "b6f4cfbc-961d-46f5-b040-a124c8fff183",
-								"exec": [
-									"postman.setGlobalVariable(\"authId\", JSON.parse(responseBody).authId);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
+					"name": "createUser",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
 								"key": "X-Requested-With",
-								"type": "text",
 								"value": "XMLHttpRequest"
 							},
 							{
-								"key": "Accept",
-								"value": "application/json, text/javascript, */*; q=0.01",
-								"type": "text"
-							},
-							{
-								"key": "Accept-API-Version",
-								"value": "protocol=1.0,resource=1.1",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{}"
-						},
-						"url": {
-							"raw": "{{proto}}://{{Hostname}}//openam/json/serverinfo/*",
-							"protocol": "{{proto}}",
-							"host": [
-								"{{Hostname}}"
-							],
-							"path": [
-								"",
-								"openam",
-								"json",
-								"serverinfo",
-								"*"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Initiate",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "b6f4cfbc-961d-46f5-b040-a124c8fff183",
-								"exec": [
-									"postman.setGlobalVariable(\"authId\", JSON.parse(responseBody).authId);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
 								"key": "Content-Type",
 								"value": "application/json"
 							},
 							{
-								"key": "Accept-API-Version",
-								"value": "protocol=1.0,resource=2.0",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{}"
-						},
-						"url": {
-							"raw": "{{proto}}://{{Hostname}}/openam/json/authenticate?authIndexType=service&authIndexValue=frdpOrgChain",
-							"protocol": "{{proto}}",
-							"host": [
-								"{{Hostname}}"
-							],
-							"path": [
-								"openam",
-								"json",
-								"authenticate"
-							],
-							"query": [
-								{
-									"key": "authIndexType",
-									"value": "service"
-								},
-								{
-									"key": "authIndexValue",
-									"value": "frdpOrgChain"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Complete",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "7db0c8e2-9ddf-414e-90bb-d05c77578f57",
-								"exec": [
-									"postman.setGlobalVariable(\"ssoTokenId\", JSON.parse(responseBody).tokenId);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
+								"key": "X-openIDM-Username",
+								"value": "{{openidmUser}}"
 							},
 							{
-								"key": "Accept-API-Version",
-								"value": "protocol=1.0,resource=2.0",
-								"type": "text"
+								"key": "X-openIDM-Password",
+								"value": "{{openidmPassword}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"authId\":\"{{authId}}\",\n  \"template\":\"\",\n  \"stage\":\"DataStore1\",\n  \"header\":\"Sign in to OpenAM\",\n  \"callbacks\":[\n    {\n      \"type\":\"NameCallback\",\n      \"output\":[ {\"name\":\"prompt\",\"value\":\"User Name:\"} ],\n      \"input\":[ {\"name\":\"IDToken1\",\"value\":\"{{amAdminUsername}}\"} ]\n    },\n    {\n      \"type\":\"PasswordCallback\",\n      \"output\":[ {\"name\":\"prompt\",\"value\":\"Password:\"} ],\n      \"input\":[ {\"name\":\"IDToken2\",\"value\":\"{{amAdminPassword}}\"} ]\n    }\n  ]\n}"
+							"raw": "{\"userName\":\"TestUser\",\"mail\":\"TestUser@forgerocklabs.org\",\"givenName\":\"Test\",\"sn\":\"ForgeRock\", \"password\":\"Password123\"}"
 						},
 						"url": {
-							"raw": "{{proto}}://{{Hostname}}/openam/json/authenticate",
+							"raw": "{{proto}}://{{Hostname}}/openidm/managed/user?_action=create",
 							"protocol": "{{proto}}",
 							"host": [
 								"{{Hostname}}"
 							],
 							"path": [
-								"openam",
-								"json",
-								"authenticate"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "0d5091af-f359-4ace-865b-41560d5f8a3a",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"id": "e6f3f8f3-944e-4877-b973-f018c184e095",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				}
-			]
-		},
-		{
-			"name": "STSFunctions",
-			"item": [
-				{
-					"name": "STS-translate-USERNAME-SAML",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": " {\n       \"input_token_state\": {\n          \"token_type\": \"USERNAME\",\n          \"username\": \"{{openamUser}}\",\n          \"password\": \"{{openamPassword}}\"\n       },\n       \"output_token_state\": {\n          \"token_type\": \"SAML2\",\n          \"subject_confirmation\": \"BEARER\"\n       }\n    }"
-						},
-						"url": {
-							"raw": "{{proto}}://{{Hostname}}/openam/rest-sts/frdprststs?_action=translate",
-							"protocol": "{{proto}}",
-							"host": [
-								"{{Hostname}}"
-							],
-							"path": [
-								"openam",
-								"rest-sts",
-								"frdprststs"
+								"openidm",
+								"managed",
+								"user"
 							],
 							"query": [
 								{
 									"key": "_action",
-									"value": "translate"
+									"value": "create"
 								}
 							]
 						}
@@ -330,254 +679,25 @@
 					"response": []
 				},
 				{
-					"name": "STS-translate-USERNAME-OIDC",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "a36e3455-e2b0-432c-aa9b-24401761c4a5",
-								"exec": [
-									"postman.setGlobalVariable(\"myJWT\", JSON.parse(responseBody).issued_token);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": " {\n       \"input_token_state\": {\n          \"token_type\": \"USERNAME\",\n          \"username\": \"{{openamUser}}\",\n          \"password\": \"{{openamPassword}}\"\n       },\n       \"output_token_state\": {\n          \"token_type\": \"OPENIDCONNECT\",\n          \"nonce\": \"12345678\", \"allow_access\": true\n       }\n    }"
-						},
-						"url": {
-							"raw": "{{proto}}://{{Hostname}}/openam/rest-sts/frdprststs?_action=translate",
-							"protocol": "{{proto}}",
-							"host": [
-								"{{Hostname}}"
-							],
-							"path": [
-								"openam",
-								"rest-sts",
-								"frdprststs"
-							],
-							"query": [
-								{
-									"key": "_action",
-									"value": "translate"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "STS-translate-X509",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": " {\n       \"input_token_state\": {\n          \"token_type\": \"X509\"\n       },\n       \"output_token_state\": {\n          \"token_type\": \"SAML2\",\n          \"subject_confirmation\": \"BEARER\"\n       }\n    }"
-						},
-						"url": {
-							"raw": "{{proto}}://{{Hostname}}/pki/rest-sts/frdprststs?_action=translate",
-							"protocol": "{{proto}}",
-							"host": [
-								"{{Hostname}}"
-							],
-							"path": [
-								"pki",
-								"rest-sts",
-								"frdprststs"
-							],
-							"query": [
-								{
-									"key": "_action",
-									"value": "translate"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "STS-translate-X509 OIDC",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": " {\n       \"input_token_state\": {\n          \"token_type\": \"X509\"\n       },\n       \"output_token_state\": {\n          \"token_type\": \"OPENIDCONNECT\",\n          \"nonce\": \"12345678\", \"allow_access\": true\n       }\n    }"
-						},
-						"url": {
-							"raw": "{{proto}}://{{Hostname}}/pki/rest-sts/frdprststs?_action=translate",
-							"protocol": "{{proto}}",
-							"host": [
-								"{{Hostname}}"
-							],
-							"path": [
-								"pki",
-								"rest-sts",
-								"frdprststs"
-							],
-							"query": [
-								{
-									"key": "_action",
-									"value": "translate"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "STS-translate-OPENAM-SAML",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": " {\n       \"input_token_state\": {\n          \"token_type\": \"OPENAM\",\n          \"session_id\": \"{{ssoTokenId}}\"\n       },\n       \"output_token_state\": {\n          \"token_type\": \"SAML2\",\n          \"subject_confirmation\": \"BEARER\"\n       }\n    }"
-						},
-						"url": {
-							"raw": "{{proto}}://{{Hostname}}/openam/rest-sts/frdprststs?_action=translate",
-							"protocol": "{{proto}}",
-							"host": [
-								"{{Hostname}}"
-							],
-							"path": [
-								"openam",
-								"rest-sts",
-								"frdprststs"
-							],
-							"query": [
-								{
-									"key": "_action",
-									"value": "translate"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "STS-translate-OPENAM-OIDC",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "d7f8db99-25bf-4977-98e3-7babdfcd2c13",
-								"exec": [
-									"postman.setGlobalVariable(\"myJWT\", JSON.parse(responseBody).issued_token);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": " {\n       \"input_token_state\": {\n          \"token_type\": \"OPENAM\",\n          \"session_id\": \"{{ssoTokenId}}\"\n       },\n       \"output_token_state\": {\n          \"token_type\": \"OPENIDCONNECT\",\n          \"nonce\": \"12345678\", \"allow_access\": true\n       }\n    }"
-						},
-						"url": {
-							"raw": "{{proto}}://{{Hostname}}/openam/rest-sts/frdprststs?_action=translate",
-							"protocol": "{{proto}}",
-							"host": [
-								"{{Hostname}}"
-							],
-							"path": [
-								"openam",
-								"rest-sts",
-								"frdprststs"
-							],
-							"query": [
-								{
-									"key": "_action",
-									"value": "translate"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "STS-translate-OpenIDConnect",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": " {\n       \"input_token_state\": {\n          \"token_type\": \"OPENIDCONNECT\",\n          \"oidc_id_token\": \"{{myJWT}}\",\n            \"nonce\": \"12345678\", \n            \"allow_access\": true\n           \n       },\n       \"output_token_state\": {\n          \"token_type\": \"SAML2\",\n          \"subject_confirmation\": \"BEARER\"\n       }\n    }"
-						},
-						"url": {
-							"raw": "{{proto}}://{{Hostname}}/openam/rest-sts/frdprststs?_action=translate",
-							"protocol": "{{proto}}",
-							"host": [
-								"{{Hostname}}"
-							],
-							"path": [
-								"openam",
-								"rest-sts",
-								"frdprststs"
-							],
-							"query": [
-								{
-									"key": "_action",
-									"value": "translate"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "OAuth2",
-			"item": [
-				{
-					"name": "OAuth2 authorize Code Grant",
+					"name": "searchUser",
 					"request": {
 						"method": "GET",
 						"header": [
 							{
+								"key": "X-Requested-With",
+								"value": "XMLHttpRequest"
+							},
+							{
 								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"type": "text"
+								"value": "application/json"
+							},
+							{
+								"key": "X-OpenIDM-Username",
+								"value": "{{openidmUser}}"
+							},
+							{
+								"key": "X-OpenIDM-Password",
+								"value": "{{openidmPassword}}"
 							}
 						],
 						"body": {
@@ -585,48 +705,20 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{Hostname}}/openam/oauth2/authorize?response_type=code&save_consent=1&decision=Allow&scope=openid&client_id=openidm&redirect_uri=https%3A%2F%2F{{Hostname}}%3A443%2Fuser%2F&state=3p2qfhzdb1pzr0ib3jk1eat7ewqm2rq&nonce=b4bjijzqqofywk703x3mycbwexk5la2",
-							"protocol": "https",
+							"raw": "{{proto}}://{{Hostname}}/openidm/managed/user?_queryFilter=userName+sw+\"dcrane\"",
+							"protocol": "{{proto}}",
 							"host": [
 								"{{Hostname}}"
 							],
 							"path": [
-								"openam",
-								"oauth2",
-								"authorize"
+								"openidm",
+								"managed",
+								"user"
 							],
 							"query": [
 								{
-									"key": "response_type",
-									"value": "code"
-								},
-								{
-									"key": "save_consent",
-									"value": "1"
-								},
-								{
-									"key": "decision",
-									"value": "Allow"
-								},
-								{
-									"key": "scope",
-									"value": "openid"
-								},
-								{
-									"key": "client_id",
-									"value": "openidm"
-								},
-								{
-									"key": "redirect_uri",
-									"value": "https%3A%2F%2F{{Hostname}}%3A443%2Fuser%2F"
-								},
-								{
-									"key": "state",
-									"value": "3p2qfhzdb1pzr0ib3jk1eat7ewqm2rq"
-								},
-								{
-									"key": "nonce",
-									"value": "b4bjijzqqofywk703x3mycbwexk5la2"
+									"key": "_queryFilter",
+									"value": "userName+sw+\"dcrane\""
 								}
 							]
 						}
@@ -634,18 +726,103 @@
 					"response": []
 				},
 				{
-					"name": "Password Grant",
+					"name": "getAllWorkflows",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OpenIDM-Username",
+								"value": "{{openidmUser}}"
+							},
+							{
+								"key": "X-OpenIDM-Password",
+								"value": "{{openidmPassword}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Hostname}}/openidm/workflow/processinstance?_queryId=query-all-ids",
+							"host": [
+								"{{Hostname}}"
+							],
+							"path": [
+								"openidm",
+								"workflow",
+								"processinstance"
+							],
+							"query": [
+								{
+									"key": "_queryId",
+									"value": "query-all-ids"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "queryAllRoles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Requested-With",
+								"value": "XMLHttpRequest"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-OpenIDM-Username",
+								"value": "{{openidmUser}}"
+							},
+							{
+								"key": "X-OpenIDM-Password",
+								"value": "{{openidmPassword}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{proto}}://{{Hostname}}/openidm/managed/role?_queryId=query-all",
+							"protocol": "{{proto}}",
+							"host": [
+								"{{Hostname}}"
+							],
+							"path": [
+								"openidm",
+								"managed",
+								"role"
+							],
+							"query": [
+								{
+									"key": "_queryId",
+									"value": "query-all"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createRole",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "d0acc9ad-d342-495c-bc2b-929e24b5f771",
+								"id": "1767c194-dbb9-4ac1-8d99-9dd10145d70e",
 								"exec": [
-									"postman.setGlobalVariable(\"access_token\", JSON.parse(responseBody).access_token);",
-									"postman.setGlobalVariable(\"refresh_token\", JSON.parse(responseBody).refresh_token);",
-									"",
-									"",
-									"postman.setEnvironmentVariable(\"myJWT\", JSON.parse(responseBody).id_token);"
+									"postman.setGlobalVariable(\"newRole\", JSON.parse(responseBody)._id);"
 								],
 								"type": "text/javascript"
 							}
@@ -653,80 +830,144 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "X-OpenIDM-Username",
+								"value": "{{openidmUser}}"
+							},
+							{
+								"key": "X-OpenIDM-Password",
+								"value": "{{openidmPassword}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "grant_type",
-									"value": "password",
-									"type": "text"
-								},
-								{
-									"key": "username",
-									"value": "{{openamUser}}",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "{{openamPassword}}",
-									"type": "text"
-								},
-								{
-									"key": "client_id",
-									"value": "openidm",
-									"type": "text"
-								},
-								{
-									"key": "client_secret",
-									"value": "{{openamPassword}}",
-									"type": "text"
-								},
-								{
-									"key": "redirect_uri",
-									"value": "https%3A%2F%2F{{Hostname}}%3A443%2Fuser%2F",
-									"type": "text"
-								},
-								{
-									"key": "response_type",
-									"value": "code",
-									"type": "text"
-								},
-								{
-									"key": "state",
-									"value": "3p2qfhzdb1pzr0ib3jk1eat7ewqm2rq",
-									"type": "text"
-								},
-								{
-									"key": "nonce",
-									"value": "b4bjijzqqofywk703x3mycbwexk5la2",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": "{\n  \"_id\": \"MyNewRole\",\n  \"name\": \"MyNewRole\",\n  \"description\": \"Example of New Role Created over REST\"\n}"
 						},
 						"url": {
-							"raw": "https://{{Hostname}}/openam/oauth2/authorize",
-							"protocol": "https",
+							"raw": "{{proto}}://{{Hostname}}/openidm/managed/role?_action=create",
+							"protocol": "{{proto}}",
 							"host": [
 								"{{Hostname}}"
 							],
 							"path": [
-								"openam",
-								"oauth2",
-								"authorize"
+								"openidm",
+								"managed",
+								"role"
+							],
+							"query": [
+								{
+									"key": "_action",
+									"value": "create"
+								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "RP",
+					"name": "queryRole",
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [
 							{
-								"key": "Accept-API-Version",
-								"value": "protocol=1.0,resource=1.0",
+								"key": "X-Requested-With",
+								"value": "XMLHttpRequest"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-OpenIDM-Username",
+								"value": "{{openidmUser}}"
+							},
+							{
+								"key": "X-OpenIDM-Password",
+								"value": "{{openidmPassword}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{proto}}://{{Hostname}}/openidm/managed/role?_queryFilter=name+eq+{{newRole}}",
+							"protocol": "{{proto}}",
+							"host": [
+								"{{Hostname}}"
+							],
+							"path": [
+								"openidm",
+								"managed",
+								"role"
+							],
+							"query": [
+								{
+									"key": "_queryFilter",
+									"value": "name+eq+{{newRole}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteRole",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-OpenIDM-Username",
+								"value": "{{openidmUser}}"
+							},
+							{
+								"key": "X-OpenIDM-Password",
+								"value": "{{openidmPassword}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{proto}}://{{Hostname}}/openidm/managed/role/{{newRole}}",
+							"protocol": "{{proto}}",
+							"host": [
+								"{{Hostname}}"
+							],
+							"path": [
+								"openidm",
+								"managed",
+								"role",
+								"{{newRole}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DS",
+			"item": [
+				{
+					"name": "Contacts Endpoint [READ]",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OpenIDM-Username",
+								"value": "{{openamUser}}",
+								"type": "text"
+							},
+							{
+								"key": "X-OpenIDM-Password",
+								"value": "{{openamPassword}}",
 								"type": "text"
 							}
 						],
@@ -735,22 +976,107 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{Hostname}}/openam/json/sessions/{{test}}?_action=validate",
+							"raw": "https://jrsz.frdpcloud.com/contacts/users/bjensen?_prettyPrint=true",
 							"protocol": "https",
 							"host": [
-								"{{Hostname}}"
+								"jrsz",
+								"frdpcloud",
+								"com"
 							],
 							"path": [
-								"openam",
-								"json",
-								"sessions",
-								"{{test}}"
+								"contacts",
+								"users",
+								"bjensen"
 							],
 							"query": [
 								{
-									"key": "_action",
-									"value": "validate"
+									"key": "_prettyPrint",
+									"value": "true"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Contacts Endpoint [SEARCH]",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-OpenIDM-Username",
+								"type": "text",
+								"value": "{{openamUser}}"
+							},
+							{
+								"key": "X-OpenIDM-Password",
+								"type": "text",
+								"value": "{{openamPassword}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://jrsz.frdpcloud.com/contacts/users?_queryFilter=name/familyname+eq+%22Jensen%22&_prettyPrint=true&_fields=userName,name,employeeType,groups",
+							"protocol": "https",
+							"host": [
+								"jrsz",
+								"frdpcloud",
+								"com"
+							],
+							"path": [
+								"contacts",
+								"users"
+							],
+							"query": [
+								{
+									"key": "_queryFilter",
+									"value": "name/familyname+eq+%22Jensen%22"
+								},
+								{
+									"key": "_prettyPrint",
+									"value": "true"
+								},
+								{
+									"key": "_fields",
+									"value": "userName,name,employeeType,groups"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "IG",
+			"item": [
+				{
+					"name": "Portal Menu",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://jrsz.frdpcloud.com/apps/frdp/rest/portal/menus/",
+							"protocol": "https",
+							"host": [
+								"jrsz",
+								"frdpcloud",
+								"com"
+							],
+							"path": [
+								"apps",
+								"frdp",
+								"rest",
+								"portal",
+								"menus",
+								""
 							]
 						}
 					},
